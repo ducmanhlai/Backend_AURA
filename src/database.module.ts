@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-
 @Module({
-  imports: [
+  imports: [ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.host,
@@ -10,8 +10,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       username: process.env.user,
       password: process.env.password,
       database: process.env.database,
-      synchronize: true,
+      synchronize: false,
     }),
   ],
 })
+
+
 export class DatabaseModule {}
