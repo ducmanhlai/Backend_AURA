@@ -26,7 +26,14 @@ export class AdminService {
         SELECT SUM(customer_paid) AS total
         FROM bookings
       `);
-    return result[0]?.total_revenue || 0;
+    return result[0]?.total || 0;
+  }
+  async getTotalBooking(): Promise<number> {
+    const result = await this.connection.query(`
+        SELECT count(*) AS total
+        FROM bookings
+      `);
+    return result[0]?.total || 0;
   }
   async getRevenueBranch(): Promise<any> {
     const result = await this.connection.query(`
@@ -79,7 +86,7 @@ export class AdminService {
     const result = await this.connection.query(`
     SELECT services.name,quantity
     from
-    (select service_id,sum(quantity) as quantity
+    (select service_id,count(*) as quantity
     from bookings
     GROUP BY service_id
     ORDER BY quantity DESC

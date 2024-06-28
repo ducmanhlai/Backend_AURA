@@ -28,4 +28,8 @@ export class AdminController{
     async GetTopServices(top: number){
         return await this.adminService.getTopServices(5)
     }
+    @Get('get_total_bookings')
+    async GetTotalBookings(top: number){
+        return await this.adminService.getTotalBooking()
+    }
 }
